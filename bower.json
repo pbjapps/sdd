@@ -1,0 +1,23 @@
+{
+  "name": "sdd",
+  "version": "0.0.0",
+  "homepage": "https://github.com/pbjapps/sdd",
+  "authors": [
+    "Janoo Fernandes <smoothclip@gmail.com>"
+  ],
+  "description": "A simple test site for SDD",
+  "license": "Apache 2.0",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.2",
+    "fontawesome": "~4.3.0",
+    "fullcalendar": "~2.2.6"
+  }
+}

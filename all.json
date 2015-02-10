@@ -1,0 +1,10 @@
+---
+---
+[{% for post in site.posts %}{
+  "sdd-date": "{{post.sdd-date}}",
+  "title": "{{post.title}}",
+  "passage": "{{post.passage}}",
+  "duration": "{{post.duration}}",
+  "tags": "{{ post.tags | array_to_sentence_string }}",
+  "categories": "{{post.categories}}"
+  }{% if forloop.rindex0 > 0 %},{% endif %}{% endfor %}]
