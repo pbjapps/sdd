@@ -7,6 +7,7 @@ if ARGV.include? "generate"
   raise "generate expects another argument: year" unless ARGV.length>=2
   seed_year = ARGV[1].to_s
   # raise "generate cannot go backwards in time!" if seed_year.to_i<=2015
+  puts "Generating data for #{seed_year}..."
 end
 
 seed_file = File.read('_data/seed.json')
@@ -33,7 +34,24 @@ if ARGV.include? "reset"
   raise "reset expects another argument: name of directory to reset" unless ARGV.length>=2
   year = ARGV[1].to_s
   dir_reset = "#{ROOT_DIR}/#{year}"
+  puts "Resetting #{dir_reset}..."
   FileUtils.rm_rf dir_reset
+end
+
+if ARGV.include? "add"
+  raise "add expects two arguments: field_name and field_value" unless ARGV.length>=3
+  field_name = ARGV[1].to_s
+  field_value = ARGV[2].to_s
+  puts "Adding #{field_name} => #{field_value} to all data..."
+
+  Dir.glob("#{ROOT_DIR}/*/*/*.json") do |data_filepath|
+    data_file = File.open( data_filepath, "r" )
+    entry = JSON.parse(data_file.read)
+    entry[field_name] = field_value.gsub "%ID", entry["id"].to_s
+    data_file = File.open( data_filepath, "w" )
+    data_file.write(JSON.pretty_generate(entry))
+    puts "Updated #{data_filepath}..."
+  end
 end
 
 offset = 0
@@ -60,6 +78,7 @@ for index in 0..364
 
   FileUtils.mkdir_p(File.dirname(current_filename))
   File.open(current_filename,"w") do |f|
+    puts "Writing #{current_filename}..."
     f.write(JSON.pretty_generate(entry))
   end unless File.file?(current_filename)
 
